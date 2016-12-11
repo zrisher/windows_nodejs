@@ -8,4 +8,4 @@ license          'MIT'
 source_url       'https://github.com/zrisher/windows_nodejs'
 issues_url       'https://github.com/zrisher/windows_nodejs/issues'
 supports         'windows'
-#chef_version     '~> 12'  Only in Chef 12.4+, opsworks currently 12.2
+chef_version     '~> 12' if respond_to?(:chef_version) # Chef 12.2

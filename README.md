@@ -1,2 +1,2 @@
-# windows_nodejs_cookbook
-Chef 12 cookbook for Node.js on Windows
+# windows_nodejs
+Chef cookbook for Node.js on Windows

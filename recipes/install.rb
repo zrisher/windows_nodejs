@@ -12,7 +12,7 @@ _source = config['source'] ||
     "https://nodejs.org/dist/v#{_version}/node-v#{_version}-#{_arch}.msi"
 
 # Attempt to look up the checksum if not provided
-_checksum = config['checksum'] || config['checksums'][version][arch]
+_checksum = config['checksum'] || config['checksums'][_version][_arch]
 
 # Install using `windows` cookbook, deprecated but required for Chef < 12.6
 Chef::Log.info("Installing Node.js v#{_version} from #{_source}")

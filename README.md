@@ -17,7 +17,7 @@ checksum with `['windows_nodejs']['checksum']`.
 
 > What about NPM?
 
-This is planned.
+It's included with Node!
 
 > Why isn't this part of the official Chef Node.js cookbook?
 

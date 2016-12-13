@@ -1,4 +1,4 @@
-=begin
+
 
 group 'Administrators' do
   members ['domain\foo']
@@ -23,7 +23,5 @@ end
 
 
 # G(MWS,w;dWZE3[@GVc_!E8Cy
-
-=end
 
 

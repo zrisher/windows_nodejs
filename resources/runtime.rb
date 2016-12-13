@@ -8,6 +8,6 @@ defaults = node[:windows_nodejs][:runtime][:defaults]
 attribute :checksum, kind_of: [String, nil], default: defaults[:checksum]
 attribute :source, kind_of: [String, nil], default: defaults[:source]
 attribute :version, kind_of: String, default: defaults[:version],
-          name_attribute: true, required: false
+          name_attribute: true
 
 

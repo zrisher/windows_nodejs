@@ -1,1 +1,1 @@
-include_recipe 'windows_nodejs::setup'
+windows_nodejs_runtime

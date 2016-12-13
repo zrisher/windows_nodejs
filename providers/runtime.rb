@@ -1,3 +1,6 @@
+use_inline_resources
+
+provides :windows_nodejs_runtime, os: 'windows' if respond_to?(:provides)
 def whyrun_supported?; true; end
 
 action :create do

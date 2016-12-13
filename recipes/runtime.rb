@@ -1,3 +1,10 @@
+
+windows_nodejs_runtime
+
+
+
+=begin
+
 config = node[:windows_nodejs][:runtime]
 
 # Determine platform architecture
@@ -25,3 +32,4 @@ end
 # Do we need to need to ensure there's only the correct Node.js in path?
 # Or does the package take care of this for us?
 
+=end

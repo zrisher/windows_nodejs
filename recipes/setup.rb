@@ -1,1 +1,1 @@
-include_recipe 'runtime'
+include_recipe 'windows_nodejs::runtime'

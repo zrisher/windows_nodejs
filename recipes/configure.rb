@@ -1,5 +1,4 @@
 =begin
-
 # Print config info for each app to its version-shared config folder as JS data
 node[:deploy][:apps].each do |application, deploy|
   if deploy[:application_type] != 'nodejs'

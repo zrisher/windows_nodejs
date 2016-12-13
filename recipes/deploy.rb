@@ -104,4 +104,26 @@ node[:deploy].each do |application, deploy|
   end
 end
 
+
+compile assets?
+
+node[:deploy].each do |application, deploy|
+  execute "restart Rails app #{application}" do
+    cwd deploy[:current_path]
+    command node[:opsworks][:rails_stack][:restart_command]
+
+    action :nothing
+  end
+
+  execute 'rake assets:precompile' do
+    cwd deploy[:current_path]
+    #user 'root' # deploy user because it has a umask of root, so created log files can't be written to
+    command 'bundle exec rake assets:precompile'
+    environment 'RAILS_ENV' => deploy[:static_assets][:compilation_env]
+
+    #action :run
+    notifies :run, "execute[restart Rails app #{application}]"
+  end
+end
+
 =end

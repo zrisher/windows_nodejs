@@ -20,8 +20,8 @@ action :create do
   end
 
   group r.deploy_user_group do
-    members [r.deploy_user_name]
-    append true
+    members                    [r.deploy_user_name]
+    append                     true
   end
 
   # Deploy Key
@@ -38,6 +38,24 @@ action :create do
   Chef::Log.info "windows_nodejs::app:create ssh_key: #{r.ssh_key}"
   Chef::Log.info "windows_nodejs::app:create ssh_wrapper: #{ssh_wrapper}"
 
+  # Deploy
+  deploy r.name do
+    user                       r.deploy_user_name
+    group                      r.deploy_user_group
+    repository                 r.source
+    revision                   r.revision
+    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
+    deploy_to                  "#{r.apps_dir}//#{r.name}"
+    keep_releases              r.keep_releases
+    depth                      r.depth
+    enable_submodules          r.enable_submodules
+
+    after_restart              r.after_restart
+    before_migrate             r.before_migrate
+    before_restart             r.before_restart
+    before_symlink             r.before_symlink
+  end
+
   # Exec User
   user r.exec_user_name do
     comment                    'NodeJS Exec Agent'
@@ -48,8 +66,8 @@ action :create do
   end
 
   group r.exec_user_group do
-    members [r.exec_user_name]
-    append true
+    members                    [r.exec_user_name]
+    append                     true
   end
 
 end
@@ -69,51 +87,15 @@ end
 
 
 =begin
-
-
-
-
-
-
-
-
-
-
-
-  # Deploy
-  deploy r.name do
-    user                       r.deploy_user_name
-    group                      r.deploy_user_group
-
-    repository                 r.source
-    revision                   r.revision
-    deploy_to
-
-  end
-
-    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
-    enable_submodules          r.enable_submodules
-    depth                      r.depth
-
-    keep_releases              r.keep_releases
-
     environment                Hash
 
     migrate                    r.migrate
     migration_command          r.migration_command
 
-    after_restart              r.after_restart
-    before_migrate             r.before_migrate
-    before_restart             r.before_restart
-    before_symlink             r.before_symlink
-
-
-
     create_dirs_before_symlink Array
     purge_before_symlink       Array
     symlinks                   Hash
     symlink_before_migrate     Hash
-
 
     restart_command            Proc, String
 

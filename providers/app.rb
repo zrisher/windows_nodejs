@@ -7,6 +7,15 @@ def whyrun_supported?; true; end
 action :create do
   Chef::Log.info "windows_nodejs::app:create name: #{new_resource.name}"
 
+
+
+end
+
+=begin
+
+
+
+
   r = new_resource
 
 
@@ -48,9 +57,18 @@ action :create do
 
   end
 
-end
 
-=begin
+
+
+
+
+
+
+
+
+
+
+
     ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
     enable_submodules          r.enable_submodules
     depth                      r.depth

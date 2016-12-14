@@ -1,3 +1,5 @@
+require 'securerandom'
+
 use_inline_resources
 
 provides :windows_nodejs_app, os: 'windows' if respond_to?(:provides)
@@ -14,6 +16,7 @@ action :create do
     comment                    'NodeJS App Deploy Agent'
     home                       r.deploy_user_home
     shell                      r.deploy_user_shell
+    password                   SecureRandom.hex
     manage_home                true
     action                     :create
   end

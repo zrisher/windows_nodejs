@@ -1,32 +1,21 @@
-default[:windows_nodejs][:app_defaults] = {
-    deploy: {
-        base_dir: 'C:\\apps',
-        npm_install: true,
-        npm_prune: true,
-        releases_to_keep: 5,
-        user: {
-            name: 'nodejs_deploy',
-            group: 'nodejs',
-            home: 'C:\\Users\\nodejs_deploy',
-            shell: 'C:\\Users\\nodejs_deploy'
-        }
-    },
-    execute: {
-        env: 'production',
-        env_vars: {},
-        user: {
-          name: 'nodejs_exec',
-          group: 'nodejs',
-          home: 'C:\\Users\\nodejs_exec',
-          shell: 'C:\\Users\\nodejs_exec'
-        }
-    },
-    service: {
+default[:windows_nodejs][:deploy][:base_dir] = 'C:\\apps'
+default[:windows_nodejs][:deploy][:npm_install] = true
+default[:windows_nodejs][:deploy][:npm_prune] = true
+default[:windows_nodejs][:deploy][:keep_releases] = 5
+default[:windows_nodejs][:deploy][:user][:name] = 'nodejs_deploy'
+default[:windows_nodejs][:deploy][:user][:group] = 'nodejs'
+default[:windows_nodejs][:deploy][:user][:home] = 'C:\\Users\\nodejs_deploy'
+default[:windows_nodejs][:deploy][:user][:shell] = 'C:\\Users\\nodejs_deploy'
 
-    }
-}
+
+default[:windows_nodejs][:execute][:env] = 'production'
+default[:windows_nodejs][:execute][:env_vars] = {}
+default[:windows_nodejs][:execute][:user][:name] = 'nodejs_exec'
+default[:windows_nodejs][:execute][:user][:group] = 'nodejs'
+default[:windows_nodejs][:execute][:user][:home] = 'C:\\Users\\nodejs_exec'
+default[:windows_nodejs][:execute][:user][:shell] = 'C:\\Users\\nodejs_exec'
+
 
 default[:windows_nodejs][:apps] = {}
-
 # Override config defaults per app, for example:
 #normal[:windows_nodejs][:apps][:example_app][:deploy][:releases_to_keep] = 10

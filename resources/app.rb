@@ -3,7 +3,7 @@ provides :windows_nodejs_app, os: 'windows' if respond_to?(:provides)
 actions :create, :update, :delete
 default_action :create
 
-config = node[:windows_nodejs][:app_defaults]
+config = node[:windows_nodejs]
 
 attribute :source, kind_of: String, required: true
 attribute :revision, kind_of: String, required: true
@@ -24,7 +24,6 @@ attribute :deploy_user_home, kind_of: [String, NilClass],
 attribute :deploy_user_shell, kind_of: [String, NilClass],
           default: config[:deploy][:user][:shell]
 
-
 attribute :exec_user_name, kind_of: [String, NilClass],
           default: config[:exec][:user][:name]
 attribute :exec_user_group, kind_of: [String, NilClass],
@@ -34,7 +33,7 @@ attribute :exec_user_home, kind_of: [String, NilClass],
 attribute :exec_user_shell, kind_of: [String, NilClass],
           default: config[:exec][:user][:shell]
 
-attribute :after_restart, kind_of: [Proc, String], default: nil
-attribute :before_migrate, kind_of: [Proc, String], default: nil
-attribute :before_restart, kind_of: [Proc, String], default: nil
-attribute :before_symlink, kind_of: [Proc, String], default: nil
+attribute :after_restart, kind_of: [Proc, String]
+attribute :before_migrate, kind_of: [Proc, String]
+attribute :before_restart, kind_of: [Proc, String]
+attribute :before_symlink, kind_of: [Proc, String]

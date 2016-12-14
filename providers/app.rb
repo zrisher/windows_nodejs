@@ -1,3 +1,11 @@
+use_inline_resources
+
+provides :windows_nodejs_app, os: 'windows' if respond_to?(:provides)
+def whyrun_supported?; true; end
+
+
+
+
 #
 # Author:: Conrad Kramer <conrad@kramerapps.com>
 # Cookbook Name:: application_node

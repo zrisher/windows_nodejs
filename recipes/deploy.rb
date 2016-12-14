@@ -1,19 +1,15 @@
-=begin
-
-defaults = node[:windows_nodejs][:deploy]
 apps = node[:windows_nodejs][:apps]
+defaults = node[:windows_nodejs][:app_defaults]
 
-
+=begin
 
 apps.each do |name, config|
 
-
-
-
-
-  opsworks_deploy_user do
-    deploy_data deploy
+  windows_nodejs_app name
+    action :deploy
   end
+
+
 
 end
 

@@ -1,4 +1,4 @@
-default[:windows_nodejs][:app] = {
+default[:windows_nodejs][:app_defaults] = {
     deploy: {
         base_dir: 'C:\\nodejs\\apps',
         npm_install: true,

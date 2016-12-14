@@ -24,6 +24,19 @@ action :create do
     append true
   end
 
+  # Deploy Key
+  ssh_wrapper = nil
+  if r.ssh_key
+    key_path = "#{r.deploy_user_home}/.ssh/#{r.name}_repo_key"
+
+    file key_path do
+      content r.ssh_key
+    end
+
+    ssh_wrapper = "ssh -i #{key_path}"
+  end
+  Chef::Log.info "windows_nodejs::app:create ssh_key: #{r.ssh_key}"
+  Chef::Log.info "windows_nodejs::app:create ssh_wrapper: #{ssh_wrapper}"
 
   # Exec User
   user r.exec_user_name do
@@ -59,16 +72,7 @@ end
 
 
 
-  # Deploy Key
-  if r.ssh_key
-    key_path = "#{r.deploy_user_home}/.ssh/#{r.name}_repo_key"
 
-    file key_path do
-      content r.ssh_key
-    end
-
-    ssh_wrapper = "ssh -i #{key_path}"
-  end
 
 
 
@@ -86,9 +90,6 @@ end
     deploy_to
 
   end
-
-
-
 
     ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
     enable_submodules          r.enable_submodules

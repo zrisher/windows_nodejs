@@ -15,20 +15,49 @@ action :create do
     comment                    'NodeJS Deploy Agent'
     home                       r.deploy_user_home
     shell                      r.deploy_user_shell
-    password                   SecureRandom.urlsafe_base64[0, 15]
+    password                   new_windows_password
     manage_home                true
+  end
+
+  group r.deploy_user_group do
+    members [r.deploy_user_name]
+    append true
+  end
+
+
+  # Exec User
+  user r.exec_user_name do
+    comment                    'NodeJS Exec Agent'
+    home                       r.exec_user_home
+    shell                      r.exec_user_shell
+    password                   new_windows_password
+    manage_home                true
+  end
+
+  group r.exec_user_group do
+    members [r.exec_user_name]
+    append true
   end
 
 end
 
 
 
+def new_windows_password(length=16)
+  pass = SecureRandom.urlsafe_base64(length)[0, length-1]
+
+  until (pass =~ /[0-9]/ && pass =~ /[A-Z]/ && pass =~ /[A-Z]/) do
+    pass = SecureRandom.urlsafe_base64(length)[0, length-1]
+  end
+
+  pass
+end
+
+
+
 =begin
 
-  group r.deploy_user_group do
-    members [r.deploy_user_name]
-    append true
-  end
+
 
   # Deploy Key
   if r.ssh_key
@@ -41,19 +70,7 @@ end
     ssh_wrapper = "ssh -i #{key_path}"
   end
 
-  # Exec User
-  user r.exec_user_name do
-    comment                    'NodeJS Exec Agent'
-    home                       r.exec_user_home
-    shell                      r.exec_user_shell
-    password                   SecureRandom.urlsafe_base64[0, 15]
-    manage_home                true
-  end
 
-  group r.exec_user_group do
-    members [r.exec_user_name]
-    append true
-  end
 
 
 

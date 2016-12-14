@@ -15,7 +15,7 @@ action :create do
     comment                    'NodeJS Deploy Agent'
     home                       r.deploy_user_home
     shell                      r.deploy_user_shell
-    password                   SecureRandom.urlsafe_base64[0, 15] # 'asr32r2@!#$dfdEDFD'
+    password                   SecureRandom.urlsafe_base64[0, 15]
     manage_home                true
   end
 

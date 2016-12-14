@@ -7,9 +7,8 @@ def whyrun_supported?; true; end
 
 
 action :create do
-  Chef::Log.info "windows_nodejs::app:create name: #{new_resource.name}"
-
   r = new_resource
+  Chef::Log.info "windows_nodejs::app:create name: #{r.name}"
 
   # Deploy User
   user r.deploy_user_name do
@@ -19,6 +18,12 @@ action :create do
     password                   SecureRandom.urlsafe_base64[0, 15]
     manage_home                true
   end
+
+end
+
+
+
+=begin
 
   group r.deploy_user_group do
     members [r.deploy_user_name]
@@ -52,11 +57,7 @@ action :create do
 
 
 
-end
 
-
-
-=begin
 
   # Deploy
   deploy r.name do
@@ -68,15 +69,6 @@ end
     deploy_to
 
   end
-
-
-
-
-
-
-
-
-
 
 
 

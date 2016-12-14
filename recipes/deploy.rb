@@ -1,17 +1,17 @@
 apps = node[:windows_nodejs][:apps]
 defaults = node[:windows_nodejs][:app_defaults]
 
-=begin
 
 apps.each do |name, config|
-
-  windows_nodejs_app name
-    action :deploy
+  windows_nodejs_app name do
+    action :create
   end
-
-
-
 end
+
+
+=begin
+
+
 
 
 default[:deploy][application][:deploy_to] = "/srv/www/#{application}"

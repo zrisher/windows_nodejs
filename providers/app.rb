@@ -29,7 +29,7 @@ action :create do
   # Deploy Key
   ssh_wrapper = nil
   if r.ssh_key
-    key_path = "#{r.deploy_user_home}/.ssh/#{r.name}_repo_key"
+    key_path = "#{r.deploy_user_home}\\.ssh\\#{r.name}_repo_key"
 
     file key_path do
       content r.ssh_key
@@ -46,8 +46,8 @@ action :create do
     group                      r.deploy_user_group
     repository                 r.source
     revision                   r.revision
-    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
-    deploy_to                  "#{r.apps_dir}//#{r.name}"
+    ssh_wrapper                ssh_wrapper if ssh_wrapper
+    deploy_to                  "#{r.apps_dir}\\#{r.name}"
   end
 
   Chef::Log.info 'windows_nodejs::app:create Deploy Complete'

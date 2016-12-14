@@ -24,6 +24,8 @@ action :create do
     append                     true
   end
 
+  Chef::Log.info 'windows_nodejs::app:create Deploy User created'
+
   # Deploy Key
   ssh_wrapper = nil
   if r.ssh_key
@@ -39,15 +41,16 @@ action :create do
   Chef::Log.info "windows_nodejs::app:create ssh_wrapper: #{ssh_wrapper}"
 
   # Deploy
-  deploy r.name do
-    user                       r.deploy_user_name
-    group                      r.deploy_user_group
-    repository                 r.source
-    revision                   r.revision
-    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
-    deploy_to                  "#{r.apps_dir}//#{r.name}"
+  #deploy r.name do
+  #  user                       r.deploy_user_name
+  #  group                      r.deploy_user_group
+  #  repository                 r.source
+  #  revision                   r.revision
+  #  ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
+  #  deploy_to                  "#{r.apps_dir}//#{r.name}"
+  #end
 
-  end
+  Chef::Log.info 'windows_nodejs::app:create Deploy Complete'
 
   # Exec User
   user r.exec_user_name do
@@ -62,6 +65,8 @@ action :create do
     members                    [r.exec_user_name]
     append                     true
   end
+
+  Chef::Log.info 'windows_nodejs::app:create Exec User created'
 
 end
 

@@ -7,17 +7,7 @@ def whyrun_supported?; true; end
 action :create do
   Chef::Log.info "windows_nodejs::app:create name: #{new_resource.name}"
 
-
-
-end
-
-=begin
-
-
-
-
   r = new_resource
-
 
   # Deploy User
   user r.deploy_user_name do
@@ -36,7 +26,7 @@ end
 
   # Deploy Key
   if r.ssh_key
-    key_path = "#{r.deploy_user_home}/#{r.name}_repo_key"
+    key_path = "#{r.deploy_user_home}/.ssh/#{r.name}_repo_key"
 
     file key_path do
       content r.ssh_key
@@ -45,6 +35,12 @@ end
     ssh_wrapper = "ssh -i #{key_path}"
   end
 
+
+end
+
+
+
+=begin
 
   # Deploy
   deploy r.name do

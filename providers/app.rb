@@ -6,29 +6,95 @@ def whyrun_supported?; true; end
 
 action :create do
   Chef::Log.info "windows_nodejs::app:create name: #{new_resource.name}"
+
+  r = new_resource
+
+
+  # Deploy User
+  user r.deploy_user_name do
+    comment                    'NodeJS App Deploy Agent'
+    home                       r.deploy_user_home
+    shell                      r.deploy_user_shell
+    manage_home                true
+    action                     :create
+  end
+
+  group r.deploy_user_group do
+    members [r.deploy_user_name]
+    append true
+    action :modify
+  end
+
+  # Deploy Key
+  if r.ssh_key
+    key_path = "#{r.deploy_user_home}/#{r.name}_repo_key"
+
+    file key_path do
+      content r.ssh_key
+    end
+
+    ssh_wrapper = "ssh -i #{key_path}"
+  end
+
+
+  # Deploy
+  deploy r.name do
+    user                       r.deploy_user_name
+    group                      r.deploy_user_group
+
+    repository                 r.source
+    revision                   r.revision
+    deploy_to
+
+  end
+
 end
 
-
 =begin
-include Chef::DSL::IncludeRecipe
+    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
+    enable_submodules          r.enable_submodules
+    depth                      r.depth
 
-action :before_compile do
-  include_recipe 'nodejs::install'
+    keep_releases              r.keep_releases
 
-  include_recipe 'nodejs::npm' if new_resource.npm
+    environment                Hash
 
-  service_name = if new_resource.service_name.nil?
-                   new_resource.application.name
-                 else
-                   new_resource.service_name
-                 end
+    migrate                    r.migrate
+    migration_command          r.migration_command
 
-  service_name = if new_resource.service_name.nil?
-                   new_resource.application.name
-                 else
-                   new_resource.service_name
-                 end
+    after_restart              r.after_restart
+    before_migrate             r.before_migrate
+    before_restart             r.before_restart
+    before_symlink             r.before_symlink
 
+
+
+    create_dirs_before_symlink Array
+    purge_before_symlink       Array
+    symlinks                   Hash
+    symlink_before_migrate     Hash
+
+
+    restart_command            Proc, String
+
+    rollback_on_error          TrueClass, FalseClass
+=end
+
+  # ensure node installed
+
+  # npm install
+=begin
+  execute 'npm install' do
+    cwd new_resource.release_path
+    user new_resource.owner
+    group new_resource.group
+    only_if { new_resource.npm }
+    environment new_resource.environment.merge('HOME' => new_resource.shared_path)
+  end
+=end
+
+  # setup service
+=begin
   r = new_resource
   unless r.restart_command
     r.restart_command do
@@ -39,31 +105,8 @@ action :before_compile do
       end
     end
   end
-
-  new_resource.environment.update('NODE_ENV' => new_resource.environment_name)
-  new_resource.updated_by_last_action(true)
-end
-
-action :before_deploy do
-  new_resource.environment['NODE_ENV'] = new_resource.environment_name
-  new_resource.updated_by_last_action(true)
-end
-
-action :before_migrate do
-  execute 'npm install' do
-    cwd new_resource.release_path
-    user new_resource.owner
-    group new_resource.group
-    only_if { new_resource.npm }
-    environment new_resource.environment.merge('HOME' => new_resource.shared_path)
-  end
-  new_resource.updated_by_last_action(true)
-end
-
-action :before_symlink do
-  new_resource.updated_by_last_action(true)
-end
-
+=end
+=begin
 action :before_restart do
   node_binary = ::File.join(node['nodejs']['dir'], 'bin', 'node')
 
@@ -91,8 +134,8 @@ action :before_restart do
   end
   new_resource.updated_by_last_action(true)
 end
-
-action :after_restart do
-  new_resource.updated_by_last_action(true)
-end
 =end
+
+
+  # 'NODE_ENV' => new_resource.environment_name
+

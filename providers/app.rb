@@ -41,14 +41,14 @@ action :create do
   Chef::Log.info "windows_nodejs::app:create ssh_wrapper: #{ssh_wrapper}"
 
   # Deploy
-  #deploy r.name do
-  #  user                       r.deploy_user_name
-  #  group                      r.deploy_user_group
-  #  repository                 r.source
-  #  revision                   r.revision
-  #  ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
-  #  deploy_to                  "#{r.apps_dir}//#{r.name}"
-  #end
+  deploy r.name do
+    user                       r.deploy_user_name
+    group                      r.deploy_user_group
+    repository                 r.source
+    revision                   r.revision
+    ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
+    deploy_to                  "#{r.apps_dir}//#{r.name}"
+  end
 
   Chef::Log.info 'windows_nodejs::app:create Deploy Complete'
 

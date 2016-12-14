@@ -46,14 +46,7 @@ action :create do
     revision                   r.revision
     ssh_wrapper                ssh_wrapper if ssh_wrapper.present?
     deploy_to                  "#{r.apps_dir}//#{r.name}"
-    keep_releases              r.keep_releases
-    depth                      r.depth
-    enable_submodules          r.enable_submodules
 
-    after_restart              r.after_restart
-    before_migrate             r.before_migrate
-    before_restart             r.before_restart
-    before_symlink             r.before_symlink
   end
 
   # Exec User
@@ -87,6 +80,19 @@ end
 
 
 =begin
+
+    keep_releases              r.keep_releases
+    depth                      r.depth
+    enable_submodules          r.enable_submodules
+
+    after_restart              r.after_restart
+    before_migrate             r.before_migrate
+    before_restart             r.before_restart
+    before_symlink             r.before_symlink
+
+
+
+
     environment                Hash
 
     migrate                    r.migrate

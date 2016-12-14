@@ -13,18 +13,16 @@ action :create do
 
   # Deploy User
   user r.deploy_user_name do
-    comment                    'NodeJS App Deploy Agent'
+    comment                    'NodeJS Deploy Agent'
     home                       r.deploy_user_home
     shell                      r.deploy_user_shell
     password                   SecureRandom.urlsafe_base64[0, 15]
     manage_home                true
-    action                     :create
   end
 
   group r.deploy_user_group do
     members [r.deploy_user_name]
     append true
-    action :modify
   end
 
   # Deploy Key
@@ -37,6 +35,21 @@ action :create do
 
     ssh_wrapper = "ssh -i #{key_path}"
   end
+
+  # Exec User
+  user r.exec_user_name do
+    comment                    'NodeJS Exec Agent'
+    home                       r.exec_user_home
+    shell                      r.exec_user_shell
+    password                   SecureRandom.urlsafe_base64[0, 15]
+    manage_home                true
+  end
+
+  group r.exec_user_group do
+    members [r.exec_user_name]
+    append true
+  end
+
 
 
 end

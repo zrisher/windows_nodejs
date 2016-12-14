@@ -1,19 +1,25 @@
 default[:windows_nodejs][:app_defaults] = {
     deploy: {
-        base_dir: 'C:\\nodejs\\apps',
+        base_dir: 'C:\\apps',
         npm_install: true,
         npm_prune: true,
         releases_to_keep: 5,
         user: {
-            name: 'deploy',
-            group: 'node_js',
-            home: 'C:\\Users\\deploy',
-            shell: 'C:\\Users\\deploy'
+            name: 'nodejs_deploy',
+            group: 'nodejs',
+            home: 'C:\\Users\\nodejs_deploy',
+            shell: 'C:\\Users\\nodejs_deploy'
         }
     },
     execute: {
         env: 'production',
-        env_vars: {}
+        env_vars: {},
+        user: {
+          name: 'nodejs_exec',
+          group: 'nodejs',
+          home: 'C:\\Users\\nodejs_exec',
+          shell: 'C:\\Users\\nodejs_exec'
+        }
     },
     service: {
 

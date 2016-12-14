@@ -20,5 +20,7 @@ default[:windows_nodejs][:app_defaults] = {
     }
 }
 
+default[:windows_nodejs][:apps] = {}
+
 # Override config defaults per app, for example:
 #normal[:windows_nodejs][:apps][:example_app][:deploy][:releases_to_keep] = 10

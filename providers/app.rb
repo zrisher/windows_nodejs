@@ -83,14 +83,18 @@ end
 
 
 
-def new_windows_password(length=16)
-  pass = SecureRandom.urlsafe_base64(length)[0, length-1]
-
-  until (pass =~ /[0-9]/ && pass =~ /[A-Z]/ && pass =~ /[A-Z]/) do
+def new_windows_password(length=16, attempts=3)
+  pass = ''
+  attempt = 1
+  until meets_windows_password_complexity(pass) or attempt > attempts do
     pass = SecureRandom.urlsafe_base64(length)[0, length-1]
+    attempt += 1
   end
-
   pass
+end
+
+def meets_windows_password_complexity(pass)
+  pass.length > 8 && pass =~ /[0-9]/ && pass =~ /[a-z]/ && pass =~ /[A-Z]/
 end
 
 def new_ssh_wrapper(key_content, filename, path)

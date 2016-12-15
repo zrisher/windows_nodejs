@@ -52,10 +52,10 @@ action :create do
   end
 
   deploy r.name do
-    user                       r.deploy_user_name
-    group                      r.deploy_user_group
+#    user                       r.deploy_user_name
+#    group                      r.deploy_user_group
     repository                 r.source
-    revision                   r.revision
+#    revision                   r.revision
     ssh_wrapper                ssh_wrapper if ssh_wrapper
     deploy_to                  deploy_path
   end

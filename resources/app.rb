@@ -7,7 +7,7 @@ config = node[:windows_nodejs][:deploy]
 attribute :source, kind_of: String, required: true
 attribute :revision, kind_of: String
 attribute :ssh_key, kind_of: String
-attribute :apps_dir, kind_of: String, default: config[:base_dir]
+attribute :apps_dir, kind_of: String, default: config[:apps_dir]
 attribute :keep_releases, kind_of: Integer, default: config[:keep_releases]
 attribute :depth, kind_of: Integer, default: config[:depth]
 attribute :enable_submodules, kind_of: [TrueClass, FalseClass],

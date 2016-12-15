@@ -56,7 +56,7 @@ action :create do
 #    group                      r.deploy_user_group
     repository                 r.source
 #    revision                   r.revision
-    ssh_wrapper                ssh_wrapper if ssh_wrapper
+#    ssh_wrapper                ssh_wrapper if ssh_wrapper
     deploy_to                  deploy_path
   end
 

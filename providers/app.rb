@@ -98,7 +98,7 @@ def meets_windows_password_complexity(pass)
 end
 
 def new_ssh_wrapper(key_content, filename, path)
-  unless key_content.empty?
+  if key_content
 
     directory path do
       recursive true

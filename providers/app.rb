@@ -21,11 +21,11 @@ action :create do
   end
 
   directory r.deploy_user_home do
-    action :create
+    recursive true
   end
 
   directory r.deploy_user_shell do
-    action :create
+    recursive true
   end
 
   group r.deploy_user_group do
@@ -48,7 +48,7 @@ action :create do
   deploy_path = "#{r.apps_dir}\\#{r.name}"
 
   directory deploy_path do
-    action :create
+    recursive true
   end
 
   deploy r.name do
@@ -101,7 +101,7 @@ def new_ssh_wrapper(key_content, filename, path)
   unless key_content.empty?
 
     directory path do
-      action :create
+      recursive true
     end
 
     key_path = "#{path}\\#{filename}"

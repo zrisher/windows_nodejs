@@ -48,14 +48,14 @@ action :create do
     action :create
   end
 
-  #deploy r.name do
-  #  user                       r.deploy_user_name
-  #  group                      r.deploy_user_group
-  #  repository                 r.source
-  #  revision                   r.revision
-  #  ssh_wrapper                ssh_wrapper if ssh_wrapper
-  #  deploy_to                  "#{r.apps_dir}\\#{r.name}"
-  #end
+  deploy r.name do
+    user                       r.deploy_user_name
+    group                      r.deploy_user_group
+    repository                 r.source
+    revision                   r.revision
+    ssh_wrapper                ssh_wrapper if ssh_wrapper
+    deploy_to                  "#{r.apps_dir}\\#{r.name}"
+  end
 
   Chef::Log.info 'windows_nodejs::app:create Deploy Complete'
 

@@ -10,6 +10,7 @@ action :create do
   r = new_resource
   Chef::Log.info "windows_nodejs::app:create name: #{r.name}"
 
+
   # Deploy User
   user r.deploy_user_name do
     comment                    'NodeJS Deploy Agent'
@@ -44,7 +45,9 @@ action :create do
 
 
   # Deploy
-  directory r.apps_dir do
+  deploy_path = "#{r.apps_dir}\\#{r.name}"
+
+  directory deploy_path do
     action :create
   end
 
@@ -54,7 +57,7 @@ action :create do
     repository                 r.source
     revision                   r.revision
     ssh_wrapper                ssh_wrapper if ssh_wrapper
-    deploy_to                  "#{r.apps_dir}\\#{r.name}"
+    deploy_to                  deploy_path
   end
 
   Chef::Log.info 'windows_nodejs::app:create Deploy Complete'

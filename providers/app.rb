@@ -19,6 +19,14 @@ action :create do
     manage_home                true
   end
 
+  directory r.deploy_user_home do
+    action :create
+  end
+
+  directory r.deploy_user_shell do
+    action :create
+  end
+
   group r.deploy_user_group do
     members                    [r.deploy_user_name]
     append                     true
@@ -26,21 +34,20 @@ action :create do
 
   Chef::Log.info 'windows_nodejs::app:create Deploy User created'
 
+
   # Deploy Key
-  ssh_wrapper = nil
-  if r.ssh_key
-    key_path = "#{r.deploy_user_home}\\.ssh\\#{r.name}_repo_key"
+  ssh_wrapper = new_ssh_wrapper(
+    r.ssh_key, "#{r.name}_repo_key", "#{r.deploy_user_home}\\.ssh"
+  )
 
-    file key_path do
-      content r.ssh_key
-    end
-
-    ssh_wrapper = "ssh -i #{key_path}"
-  end
-  Chef::Log.info "windows_nodejs::app:create ssh_key: #{r.ssh_key}"
   Chef::Log.info "windows_nodejs::app:create ssh_wrapper: #{ssh_wrapper}"
 
+
   # Deploy
+  directory r.apps_dir do
+    action :create
+  end
+
   deploy r.name do
     user                       r.deploy_user_name
     group                      r.deploy_user_group
@@ -52,6 +59,7 @@ action :create do
 
   Chef::Log.info 'windows_nodejs::app:create Deploy Complete'
 
+  
   # Exec User
   user r.exec_user_name do
     comment                    'NodeJS Exec Agent'
@@ -80,6 +88,23 @@ def new_windows_password(length=16)
   end
 
   pass
+end
+
+def new_ssh_wrapper(key_content, filename, path)
+  unless key_content.empty?
+
+    directory path do
+      action :create
+    end
+
+    key_path = "#{path}\\#{filename}"
+
+    file key_path do
+      content key_content
+    end
+
+    "ssh -i #{key_path}"
+  end
 end
 
 
